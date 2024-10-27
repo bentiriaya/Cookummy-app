@@ -42,6 +42,8 @@ class OurRecipesController extends GetxController {
         'title': recipe['title'],
         'cookTime': recipe['cooktime'],
         'thumbnailUrl': recipe['imageUrl'],
+        'ingredients':recipe['ingredients'],
+        'instructions':recipe['instructions']
       },
     );
   }

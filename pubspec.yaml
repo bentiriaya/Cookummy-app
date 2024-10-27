@@ -51,6 +51,7 @@ dependencies:
   flutter_skeleton_ui: ^0.0.6
   appinio_social_share: ^0.3.2
   quickalert: ^1.1.0
+  shared_preferences: ^2.0.11
 dev_dependencies:
   flutter_test:
     sdk: flutter

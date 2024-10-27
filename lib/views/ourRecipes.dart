@@ -53,6 +53,7 @@ class ourRecipes extends StatelessWidget {
                   onTap: () {
                     // Navigation vers la page de détails avec les données de la recette
                     recipesController.goToRecipeDetails(recipe);
+                   
                   },
                   child: RecipeCard(
 

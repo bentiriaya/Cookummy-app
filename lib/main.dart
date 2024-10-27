@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/routes/route.dart';
 import 'package:flutter_application_1/views/addRecipes.dart';
 import 'package:flutter_application_1/views/home.dart';
+import 'package:flutter_application_1/views/splashScreen.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:get/get_navigation/src/routes/get_route.dart';
 
@@ -19,7 +20,7 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       getPages: routes(),
       debugShowCheckedModeBanner: false,
-home: Home(),
+      home: SplashScreen(),
     );
   }
 }
