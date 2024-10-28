@@ -1,23 +1,26 @@
 import 'package:get/get.dart';
+import '../Services/sharedperfsManagers.dart';
 
-class RecipeDetailController extends GetxController{
-  late final int id;
-  late final String title;
-  late final String cookTime;
-  late final String thumbnailUrl;
-  late final String instructions;
-  late final List<String> ingredients;
+class RecipeDetailController extends GetxController {
+  // Déclaration des variables observables
+  var id = 0.obs;
+  var title = ''.obs;
+  var cookTime = ''.obs;
+  var thumbnailUrl = ''.obs;
+  var instructions = ''.obs;
+  var ingredients = <String>[].obs;
 
   @override
-  void onInit() {
-    // Récupération des arguments au moment de l'initialisation du controller
-    final args = Get.arguments as Map<dynamic, dynamic>;
-    id = args['id'];
-    title = args['title'];
-    cookTime = args['cookTime'];
-    thumbnailUrl = args['thumbnailUrl'];
-    instructions = args['instructions'];
-    ingredients = List<String>.from(args['ingredients']); // Convertir les ingrédients en liste
+  void onInit() async {
     super.onInit();
+    final SharedperfManager sp = Get.find<SharedperfManager>();
+
+    // Attendre que toutes les données soient chargées avant d'assigner les valeurs
+    id.value = await sp.getInt("id") ?? 0;
+    title.value = await sp.getString("title") ?? "No Title";
+    cookTime.value = await sp.getString("cooktime") ?? "N/A";
+    thumbnailUrl.value = await sp.getString("imageUrl") ?? "";
+    instructions.value = await sp.getString("instructions") ?? "No instructions";
+    ingredients.value = await sp.getStringList("ingredients") ?? ["No ingredients"];
   }
 }

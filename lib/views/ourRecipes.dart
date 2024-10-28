@@ -10,6 +10,7 @@ import 'package:get/get.dart';
 
 import '../Controllers/ourRecipesController.dart';
 import '../Controllers/typecArdController.dart';
+import '../Services/sharedperfsManagers.dart';
 import '../data/strings.dart';
 
 
@@ -17,6 +18,7 @@ class ourRecipes extends StatelessWidget {
  //appel des controllers
   final OurRecipesController recipesController = Get.put(OurRecipesController());
   final TypeCardController typeCardController = Get.put(TypeCardController());
+  final SharedperfManager sp=Get.put(SharedperfManager());
 
   int selectedCardIndex = 0;
 
@@ -50,9 +52,23 @@ class ourRecipes extends StatelessWidget {
               itemBuilder: (context, index) {
                 final recipe = filteredRecipes[index];
                 return GestureDetector(
-                  onTap: () {
+                  onTap: () async{
                     // Navigation vers la page de détails avec les données de la recette
                     recipesController.goToRecipeDetails(recipe);
+                    await sp.saveInt("id", recipe["id"]);
+                    await sp.saveString("title",recipe["title"]);
+                    await sp.saveString("instructions", recipe["instructions"]);
+                    await sp.saveStringList("ingredients", recipe["ingredients"]);
+                    await sp.saveString("imageUrl", recipe["imageUrl"]);
+                    await sp.saveString("cooktime", recipe["cooktime"]);
+                    // Récupération et affichage de la valeur sauvegardée
+                    String? savedTitle = await sp.getString("title");
+                    String? savedInstruction = await sp.getString("instructions");
+                    String? savedImage=await sp.getString("imageUrl");
+                    String? savedCookTime=await sp.getString("cooktime");
+                    List<String>? savedList=await sp.getStringList("ingredients");
+                    int? savedId=await sp.getInt("id");
+                    print(savedImage); // Cela va afficher le titre sauvegardé
                    
                   },
                   child: RecipeCard(

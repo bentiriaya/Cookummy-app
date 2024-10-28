@@ -1,5 +1,6 @@
 import 'package:flutter_application_1/routes/routesnames.dart';
 import 'package:get/get.dart';
+import '../Services/sharedperfsManagers.dart';
 import '../data/apisource.dart';
 import '../data/strings.dart';
 import '../model/recipe.dart';
@@ -34,7 +35,15 @@ class OurRecipesController extends GetxController {
   void selectType(String type) {
     selectedType.value = type;
   }
-  void goToRecipeDetails(Map<String, dynamic> recipe) {
+  void goToRecipeDetails(Map<String, dynamic> recipe) async{
+    final SharedperfManager sp = Get.find<SharedperfManager>();
+
+    await sp.saveInt("id", recipe["id"]);
+    await sp.saveString("title", recipe["title"]);
+    await sp.saveString("instructions", recipe["instructions"]);
+    await sp.saveStringList("ingredients", recipe["ingredients"]);
+    await sp.saveString("imageUrl", recipe["imageUrl"]);
+    await sp.saveString("cooktime", recipe["cooktime"]);
     Get.toNamed(
       namesRoute.detailRec,
       arguments: {

@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../Controllers/RecipeDetailController.dart';
+import '../Services/sharedperfsManagers.dart';
 
 
 class RecipeDetailsPage extends StatelessWidget {
   final RecipeDetailController controller = Get.put(RecipeDetailController());
+
+
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -13,26 +18,28 @@ class RecipeDetailsPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Image.network(
-              controller.thumbnailUrl,
+            Obx(() => controller.thumbnailUrl.value.isNotEmpty
+                ? Image.asset(
+              controller.thumbnailUrl.value,
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height / 3,
               fit: BoxFit.cover,
-            ),
+            )
+                : SizedBox.shrink()),
             SizedBox(height: 10),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: Text(
-                controller.title,
+              child: Obx(() => Text(
+                controller.title.value,
                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-              ),
+              )),
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-              child: Text(
-                'Cook Time: ${controller.cookTime}',
+              child: Obx(() => Text(
+                'Cook Time: ${controller.cookTime.value}',
                 style: TextStyle(fontSize: 18, color: Colors.grey),
-              ),
+              )),
             ),
             Padding(
               padding: const EdgeInsets.all(16.0),
@@ -41,22 +48,20 @@ class RecipeDetailsPage extends StatelessWidget {
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
             ),
-            // ListView for ingredients
-            Container(
-              height: 150, // Set a fixed height for the ListView
-              child: ListView.builder(
-                itemCount: controller.ingredients.length,
-                itemBuilder: (context, index) {
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
-                    child: Text(
-                      controller.ingredients[index],
-                      style: TextStyle(fontSize: 16),
-                    ),
-                  );
-                },
-              ),
-            ),
+            Obx(() => ListView.builder(
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+              itemCount: controller.ingredients.length,
+              itemBuilder: (context, index) {
+                return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
+                  child: Text(
+                    controller.ingredients[index],
+                    style: TextStyle(fontSize: 16),
+                  ),
+                );
+              },
+            )),
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: Text(
@@ -66,34 +71,15 @@ class RecipeDetailsPage extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: Text(
-                controller.instructions,
+              child: Obx(() => Text(
+                controller.instructions.value,
                 style: TextStyle(fontSize: 16),
-              ),
+              )),
             ),
-            // Ajouter les icônes de favori et de partage
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                IconButton(
-                  icon: Icon(Icons.favorite_border), // Icône de favori
-                  onPressed: () {
-                    // Logique pour ajouter aux favoris
-                    Get.snackbar("Favori", "${controller.title} a été ajouté aux favoris.");
-                  },
-                ),
-                IconButton(
-                  icon: Icon(Icons.share), // Icône de partage
-                  onPressed: () {
-
-                  },
-                ),
-              ],
-            ),
-            SizedBox(height: 20), // Ajouter un espace en bas
           ],
         ),
       ),
     );
   }
+
 }

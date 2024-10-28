@@ -37,7 +37,7 @@ class RecipeCard extends StatelessWidget {
             Colors.black.withOpacity(0.35),
             BlendMode.multiply,
           ),
-          image: NetworkImage(thumbnailUrl),
+          image: AssetImage(thumbnailUrl),
           fit: BoxFit.cover,
         ),
       ),
