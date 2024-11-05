@@ -42,12 +42,17 @@ class DatabaseProvider {
   // CRUD Operations
   Future<void> insertRecipe(RecipeModel recipe) async {
     final db = await database;
+    // Remove 'id' from the map to let the database auto-increment it
+    var recipeData = recipe.toMap();
+    recipeData.remove('id');
+
     await db.insert(
       'recipes',
-      recipe.toMap(),
-      conflictAlgorithm: ConflictAlgorithm.replace,
+      recipeData,
+      conflictAlgorithm: ConflictAlgorithm.ignore,
     );
   }
+
 
   Future<List<RecipeModel>> getRecipes() async {
     final db = await database;
@@ -57,6 +62,7 @@ class DatabaseProvider {
       return RecipeModel.fromMap(maps[i]);
     });
   }
+
 
   Future<void> updateRecipe(RecipeModel recipe) async {
     final db = await database;

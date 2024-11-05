@@ -20,7 +20,7 @@ class NavigationController extends GetxController {
       case 0:
         return ourRecipes();
       case 1:
-        return myRecipes();
+        return MyRecipes();
       case 2:
         return Favorites();
       default:
