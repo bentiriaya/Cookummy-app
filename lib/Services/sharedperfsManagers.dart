@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_disposable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -53,5 +54,51 @@ class SharedperfManager extends GetxService{
   Future<bool?> getBool(String key) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.getBool(key);
+  }
+
+  //pour icone
+  Future<Icon?> getIcon(String key) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    // Retrieve icon data from SharedPreferences
+    String? iconData = prefs.getString(key);
+
+    if (iconData == null) {
+      return null; // Return null if no icon is found
+    }
+
+    // Deserialize icon data to create an Icon
+    Icon icon = _deserializeIcon(iconData);
+    return icon;
+  }
+
+  Future<void> saveIcon(String key, Icon value) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    // Serialize the Icon to a string
+    String iconData = _serializeIcon(value);
+
+    // Save the serialized string in SharedPreferences
+    await prefs.setString(key, iconData);
+  }
+
+// Helper function to serialize Icon into a string
+  String _serializeIcon(Icon icon) {
+    // Serialize the Icon by storing its iconData and color
+    return '${icon.icon?.codePoint},${icon.icon?.fontFamily},${icon.color?.value}';
+  }
+
+// Helper function to deserialize the string back to an Icon
+  Icon _deserializeIcon(String iconData) {
+    // Split the string back into components
+    List<String> parts = iconData.split(',');
+
+    // Get the iconData and color
+    int codePoint = int.parse(parts[0]);
+    String fontFamily = parts[1];
+    Color color = Color(int.parse(parts[2]));
+
+    // Create and return the Icon object
+    return Icon(IconData(codePoint, fontFamily: fontFamily), color: color);
   }
 }

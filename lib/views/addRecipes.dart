@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Controllers/myRecipesController.dart';
 import 'package:flutter_application_1/data/colors.dart';
@@ -7,6 +6,7 @@ import 'package:image_picker/image_picker.dart';
 import '../db/db_provider.dart';
 import '../model/recipe.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart'; // For saving selected icon
 
 class AddRecipePage extends StatefulWidget {
   AddRecipePage({super.key});
@@ -21,10 +21,11 @@ class _AddRecipePageState extends State<AddRecipePage> {
   final TextEditingController instructionsController = TextEditingController();
   final TextEditingController cooktimeController = TextEditingController();
 
-  String? imagePath; // Pour stocker le chemin de l'image
-  String? selectedType; // Pour stocker le type de recette sélectionné
+  String? imagePath; // For storing the image path
+  String? selectedType; // For storing the selected recipe type
+  Icon? selectedIcon; // For storing the selected icon
 
-  // Map des types de recettes avec les icônes
+  // Map of recipe types with icons
   static const Map<String, Icon> recipeTypes = {
     'Tout': Icon(Icons.all_inbox),
     'Salade': Icon(Icons.local_dining),
@@ -43,12 +44,21 @@ class _AddRecipePageState extends State<AddRecipePage> {
 
     if (pickedFile != null) {
       setState(() {
-        imagePath = pickedFile.path; // Mettre à jour l'état avec le chemin de l'image
+        imagePath = pickedFile.path; // Update the image path state
       });
-      print("Image selected: $imagePath"); // Débogage : imprimer le chemin de l'image
+      print("Image selected: $imagePath"); // Debug: print the image path
     } else {
       print("No image selected.");
     }
+  }
+
+  // Save the icon data in SharedPreferences
+  Future<void> _saveSelectedType(String type) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    // Serialize icon data: we store the icon name for easy retrieval
+    await prefs.setString('selectedType', type);
+    // Optionally save the icon if needed (e.g., store its codePoint or name)
+    await prefs.setString('selectedIcon', type);
   }
 
   @override
@@ -62,17 +72,17 @@ class _AddRecipePageState extends State<AddRecipePage> {
         child: Column(
           children: [
             GestureDetector(
-              onTap: _pickImage, // Appeler la fonction pour sélectionner l'image
+              onTap: _pickImage, // Call the function to pick the image
               child: CircleAvatar(
                 backgroundColor: color.yellow,
-                radius: 50, // Taille du cercle
+                radius: 50, // Circle size
                 backgroundImage: imagePath != null
-                    ? FileImage(File(imagePath!)) // Afficher l'image sélectionnée
-                    : null, // Pas d'image si aucune sélectionnée
+                    ? FileImage(File(imagePath!)) // Show the selected image
+                    : null, // No image if none selected
                 child: imagePath == null
                     ? (selectedType != null
-                    ? recipeTypes[selectedType] // Afficher l'icône du type sélectionné
-                    : Icon(Icons.camera_alt, size: 40, color: Colors.grey)) // Icône par défaut si pas d'image
+                    ? recipeTypes[selectedType!] // Show the selected type icon
+                    : Icon(Icons.camera_alt, size: 40, color: Colors.grey)) // Default icon if no image
                     : null,
               ),
             ),
@@ -89,7 +99,7 @@ class _AddRecipePageState extends State<AddRecipePage> {
               controller: instructionsController,
               decoration: InputDecoration(labelText: "Instructions"),
             ),
-            // Menu déroulant pour le type de recette
+            // Dropdown to select recipe type
             DropdownButtonFormField<String>(
               value: selectedType,
               decoration: InputDecoration(labelText: "Type de Recette"),
@@ -98,8 +108,8 @@ class _AddRecipePageState extends State<AddRecipePage> {
                   value: type,
                   child: Row(
                     children: [
-                      recipeTypes[type]!, // Afficher l'icône à côté du texte
-                      SizedBox(width: 8), // Espacement
+                      recipeTypes[type]!, // Show the icon next to text
+                      SizedBox(width: 8), // Spacing
                       Text(type),
                     ],
                   ),
@@ -107,8 +117,14 @@ class _AddRecipePageState extends State<AddRecipePage> {
               }).toList(),
               onChanged: (String? newValue) {
                 setState(() {
-                  selectedType = newValue; // Mettre à jour le type sélectionné
+                  selectedType = newValue; // Update the selected type
+                  selectedIcon = recipeTypes[newValue]; // Save the corresponding icon
                 });
+
+                // Save the selected type and icon to SharedPreferences
+                if (newValue != null) {
+                  _saveSelectedType(newValue);
+                }
               },
             ),
             TextField(
@@ -124,19 +140,19 @@ class _AddRecipePageState extends State<AddRecipePage> {
                   ingredients: ingredientsController.text.split(','),
                   instructions: instructionsController.text,
                   imageUrl: imagePath ?? '',
-                  type: selectedType ?? '', // Utiliser le type sélectionné
+                  type: selectedType ?? '', // Use the selected type
                   cooktime: cooktimeController.text,
                 );
 
-                // Utiliser le RecipeController pour ajouter la recette
+                // Use the RecipeController to add the recipe
                 final recipeController = Get.find<MyRecipesController>();
                 await recipeController.addRecipe(newRecipe);
 
-                Get.back(); // Revenir à la page précédente
+                Get.back(); // Go back to the previous page
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: color.yellow, // Couleur de fond
-                foregroundColor: Colors.white,  // Couleur du texte
+                backgroundColor: color.yellow, // Button background color
+                foregroundColor: Colors.white,  // Text color
               ),
               child: Text("Ajouter la Recette"),
             ),
