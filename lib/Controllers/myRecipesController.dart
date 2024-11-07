@@ -26,6 +26,10 @@ class MyRecipesController extends GetxController {
     await _dbProvider.insertRecipe(recipe);
     await loadRecipes(); // This will refresh the list of recipes
   }
+  Future<void> deleteRecipe(int id) async {
+    await _dbProvider.deleteRecipe(id);
+    await loadRecipes(); // Recharger la liste après la suppression
+  }
   Future<void> gotoDetails(Map<String , dynamic> recipe)async {
     final SharedperfManager sp = Get.find<SharedperfManager>();
     await sp.saveInt("id", recipe["id"]);

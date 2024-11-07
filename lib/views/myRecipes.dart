@@ -18,6 +18,33 @@ class MyRecipes extends StatelessWidget {
     // Retourne l'icône par défaut si aucune icône n'est enregistrée
     return Data.recipeTypes2[type] ?? Icon(Icons.fastfood, size: 50);
   }
+
+  Future<void> _showDeleteConfirmationDialog(BuildContext context, int recipeId) async {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("Confirm Deletion"),
+          content: Text("Are you sure you want to delete this recipe?"),
+          actions: [
+            TextButton(
+              child: Text("Cancel"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: Text("Delete", style: TextStyle(color: Colors.red)),
+              onPressed: () async {
+                await controller.deleteRecipe(recipeId); // Supprimer la recette
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -99,6 +126,10 @@ class MyRecipes extends StatelessWidget {
 
 
                       );
+                    },
+                    onLongPress: () {
+                      // Afficher la boîte de dialogue de confirmation de suppression
+                      _showDeleteConfirmationDialog(context, recipe.id);
                     },
                   ),
                 );
