@@ -33,7 +33,16 @@ class Data{
     Data.soupe: Icon(Icons.soup_kitchen),
   Data.glace:Icon(Icons.icecream)
   };
-
+static const Map<String, Icon> recipeTypes2 = {
+  'Salade': Icon(Icons.local_dining),
+  'Cake': Icon(Icons.cake),
+  'Biscuits': Icon(Icons.cookie),
+  'Boulangerie': Icon(Icons.bakery_dining),
+  'Boissons': Icon(Icons.local_bar),
+  'Fast Food': Icon(Icons.fastfood),
+  'Soupe': Icon(Icons.soup_kitchen),
+  'Glace': Icon(Icons.icecream),
+};
 
 
 }

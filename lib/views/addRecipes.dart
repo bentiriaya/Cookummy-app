@@ -2,11 +2,13 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Controllers/myRecipesController.dart';
 import 'package:flutter_application_1/data/colors.dart';
+import 'package:flutter_application_1/data/strings.dart';
 import 'package:image_picker/image_picker.dart';
 import '../db/db_provider.dart';
 import '../model/recipe.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart'; // For saving selected icon
+
 
 class AddRecipePage extends StatefulWidget {
   AddRecipePage({super.key});
@@ -25,18 +27,7 @@ class _AddRecipePageState extends State<AddRecipePage> {
   String? selectedType; // For storing the selected recipe type
   Icon? selectedIcon; // For storing the selected icon
 
-  // Map of recipe types with icons
-  static const Map<String, Icon> recipeTypes = {
-    'Tout': Icon(Icons.all_inbox),
-    'Salade': Icon(Icons.local_dining),
-    'Cake': Icon(Icons.cake),
-    'Biscuits': Icon(Icons.cookie),
-    'Boulangerie': Icon(Icons.bakery_dining),
-    'Boissons': Icon(Icons.local_bar),
-    'Fast Food': Icon(Icons.fastfood),
-    'Soupe': Icon(Icons.soup_kitchen),
-    'Glace': Icon(Icons.icecream),
-  };
+
 
   Future<void> _pickImage() async {
     final ImagePicker _picker = ImagePicker();
@@ -81,7 +72,7 @@ class _AddRecipePageState extends State<AddRecipePage> {
                     : null, // No image if none selected
                 child: imagePath == null
                     ? (selectedType != null
-                    ? recipeTypes[selectedType!] // Show the selected type icon
+                    ? Data.recipeTypes2[selectedType!] // Show the selected type icon
                     : Icon(Icons.camera_alt, size: 40, color: Colors.grey)) // Default icon if no image
                     : null,
               ),
@@ -103,12 +94,12 @@ class _AddRecipePageState extends State<AddRecipePage> {
             DropdownButtonFormField<String>(
               value: selectedType,
               decoration: InputDecoration(labelText: "Type de Recette"),
-              items: recipeTypes.keys.map((String type) {
+              items: Data.recipeTypes2.keys.map((String type) {
                 return DropdownMenuItem<String>(
                   value: type,
                   child: Row(
                     children: [
-                      recipeTypes[type]!, // Show the icon next to text
+                      Data.recipeTypes2[type]!, // Show the icon next to text
                       SizedBox(width: 8), // Spacing
                       Text(type),
                     ],
@@ -118,7 +109,7 @@ class _AddRecipePageState extends State<AddRecipePage> {
               onChanged: (String? newValue) {
                 setState(() {
                   selectedType = newValue; // Update the selected type
-                  selectedIcon = recipeTypes[newValue]; // Save the corresponding icon
+                  selectedIcon = Data.recipeTypes2[newValue]; // Save the corresponding icon
                 });
 
                 // Save the selected type and icon to SharedPreferences
