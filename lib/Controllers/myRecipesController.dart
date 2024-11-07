@@ -30,6 +30,12 @@ class MyRecipesController extends GetxController {
     await _dbProvider.deleteRecipe(id);
     await loadRecipes(); // Recharger la liste après la suppression
   }
+  // Mettre à jour une recette
+  Future<void> updateRecipe(RecipeModel recipe) async {
+    final dbProvider = DatabaseProvider();
+    await dbProvider.updateRecipe(recipe); // Mise à jour dans la base de données
+    loadRecipes(); // Recharger les recettes après la mise à jour
+  }
   Future<void> gotoDetails(Map<String , dynamic> recipe)async {
     final SharedperfManager sp = Get.find<SharedperfManager>();
     await sp.saveInt("id", recipe["id"]);

@@ -7,11 +7,12 @@ import 'package:image_picker/image_picker.dart';
 import '../db/db_provider.dart';
 import '../model/recipe.dart';
 import 'package:get/get.dart';
-import 'package:shared_preferences/shared_preferences.dart'; // For saving selected icon
-
+import 'package:shared_preferences/shared_preferences.dart'; // Pour stocker l'icône sélectionnée
 
 class AddRecipePage extends StatefulWidget {
-  AddRecipePage({super.key});
+  final RecipeModel? recipeToEdit; // Paramètre pour passer la recette à modifier
+
+  AddRecipePage({super.key, this.recipeToEdit});
 
   @override
   _AddRecipePageState createState() => _AddRecipePageState();
@@ -23,32 +24,42 @@ class _AddRecipePageState extends State<AddRecipePage> {
   final TextEditingController instructionsController = TextEditingController();
   final TextEditingController cooktimeController = TextEditingController();
 
-  String? imagePath; // For storing the image path
-  String? selectedType; // For storing the selected recipe type
-  Icon? selectedIcon; // For storing the selected icon
+  String? imagePath; // Pour stocker le chemin de l'image
+  String? selectedType; // Pour stocker le type de recette sélectionné
+  Icon? selectedIcon; // Pour stocker l'icône sélectionnée
 
+  @override
+  void initState() {
+    super.initState();
 
+    // Si une recette est passée pour modification, on initialise les champs
+    if (widget.recipeToEdit != null) {
+      titleController.text = widget.recipeToEdit!.title;
+      ingredientsController.text = widget.recipeToEdit!.ingredients.join(','); // Conversion en chaîne
+      instructionsController.text = widget.recipeToEdit!.instructions;
+      cooktimeController.text = widget.recipeToEdit!.cooktime;
+      imagePath = widget.recipeToEdit!.imageUrl;
+      selectedType = widget.recipeToEdit!.type;
+      selectedIcon = Data.recipeTypes2[selectedType!]; // Initialiser l'icône
+    }
+  }
 
+  // Fonction pour sélectionner une image depuis la galerie
   Future<void> _pickImage() async {
     final ImagePicker _picker = ImagePicker();
     final XFile? pickedFile = await _picker.pickImage(source: ImageSource.gallery);
 
     if (pickedFile != null) {
       setState(() {
-        imagePath = pickedFile.path; // Update the image path state
+        imagePath = pickedFile.path;
       });
-      print("Image selected: $imagePath"); // Debug: print the image path
-    } else {
-      print("No image selected.");
     }
   }
 
-  // Save the icon data in SharedPreferences
+  // Sauvegarder le type sélectionné dans SharedPreferences
   Future<void> _saveSelectedType(String type) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    // Serialize icon data: we store the icon name for easy retrieval
     await prefs.setString('selectedType', type);
-    // Optionally save the icon if needed (e.g., store its codePoint or name)
     await prefs.setString('selectedIcon', type);
   }
 
@@ -56,41 +67,43 @@ class _AddRecipePageState extends State<AddRecipePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Ajouter une Recette"),
+        title: Text(widget.recipeToEdit == null ? "Ajouter une Recette" : "Modifier la Recette"),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
+            // Sélectionner une image pour la recette
             GestureDetector(
-              onTap: _pickImage, // Call the function to pick the image
+              onTap: _pickImage,
               child: CircleAvatar(
                 backgroundColor: color.yellow,
-                radius: 50, // Circle size
-                backgroundImage: imagePath != null
-                    ? FileImage(File(imagePath!)) // Show the selected image
-                    : null, // No image if none selected
+                radius: 50,
+                backgroundImage: imagePath != null ? FileImage(File(imagePath!)) : null,
                 child: imagePath == null
                     ? (selectedType != null
-                    ? Data.recipeTypes2[selectedType!] // Show the selected type icon
-                    : Icon(Icons.camera_alt, size: 40, color: Colors.grey)) // Default icon if no image
+                    ? Data.recipeTypes2[selectedType!]  // Afficher l'icône sélectionnée
+                    : Icon(Icons.camera_alt, size: 40, color: Colors.grey))
                     : null,
               ),
             ),
             SizedBox(height: 20),
+            // Champ pour le titre
             TextField(
               controller: titleController,
               decoration: InputDecoration(labelText: "Titre"),
             ),
+            // Champ pour les ingrédients
             TextField(
               controller: ingredientsController,
               decoration: InputDecoration(labelText: "Ingrédients (séparés par des virgules)"),
             ),
+            // Champ pour les instructions
             TextField(
               controller: instructionsController,
               decoration: InputDecoration(labelText: "Instructions"),
             ),
-            // Dropdown to select recipe type
+            // Liste déroulante pour sélectionner le type de recette
             DropdownButtonFormField<String>(
               value: selectedType,
               decoration: InputDecoration(labelText: "Type de Recette"),
@@ -99,8 +112,8 @@ class _AddRecipePageState extends State<AddRecipePage> {
                   value: type,
                   child: Row(
                     children: [
-                      Data.recipeTypes2[type]!, // Show the icon next to text
-                      SizedBox(width: 8), // Spacing
+                      Data.recipeTypes2[type]!, // Afficher l'icône à côté du texte
+                      SizedBox(width: 8), // Espacement
                       Text(type),
                     ],
                   ),
@@ -108,44 +121,49 @@ class _AddRecipePageState extends State<AddRecipePage> {
               }).toList(),
               onChanged: (String? newValue) {
                 setState(() {
-                  selectedType = newValue; // Update the selected type
-                  selectedIcon = Data.recipeTypes2[newValue]; // Save the corresponding icon
+                  selectedType = newValue;
+                  selectedIcon = Data.recipeTypes2[newValue];
                 });
 
-                // Save the selected type and icon to SharedPreferences
+                // Sauvegarder le type sélectionné dans SharedPreferences
                 if (newValue != null) {
                   _saveSelectedType(newValue);
                 }
               },
             ),
+            // Champ pour le temps de cuisson
             TextField(
               controller: cooktimeController,
               decoration: InputDecoration(labelText: "Temps de cuisson"),
             ),
             SizedBox(height: 20),
+            // Bouton pour ajouter ou modifier la recette
             ElevatedButton(
               onPressed: () async {
                 final newRecipe = RecipeModel(
-                  id: 0,
+                  id: widget.recipeToEdit?.id ?? 0, // Si c'est une modification, garder l'ID existant
                   title: titleController.text,
                   ingredients: ingredientsController.text.split(','),
                   instructions: instructionsController.text,
                   imageUrl: imagePath ?? '',
-                  type: selectedType ?? '', // Use the selected type
+                  type: selectedType ?? '', // Utiliser le type sélectionné
                   cooktime: cooktimeController.text,
                 );
 
-                // Use the RecipeController to add the recipe
                 final recipeController = Get.find<MyRecipesController>();
-                await recipeController.addRecipe(newRecipe);
+                if (widget.recipeToEdit == null) {
+                  await recipeController.addRecipe(newRecipe); // Ajouter si c'est une nouvelle recette
+                } else {
+                  await recipeController.updateRecipe(newRecipe); // Modifier si c'est une recette existante
+                }
 
-                Get.back(); // Go back to the previous page
+                Get.back(); // Retourner à la page précédente
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: color.yellow, // Button background color
-                foregroundColor: Colors.white,  // Text color
+                backgroundColor: color.yellow,
+                foregroundColor: Colors.white,
               ),
-              child: Text("Ajouter la Recette"),
+              child: Text(widget.recipeToEdit == null ? "Ajouter la Recette" : "Modifier la Recette"),
             ),
           ],
         ),

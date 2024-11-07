@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/data/colors.dart';
 import 'package:flutter_application_1/routes/routesnames.dart';
+import 'package:flutter_application_1/views/addRecipes.dart';
 import 'package:get/get.dart';
 import 'package:flutter_application_1/Controllers/myRecipesController.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../Services/sharedperfsManagers.dart';
 import '../data/strings.dart';
 import '../model/recipe.dart';
+
 
 class MyRecipes extends StatelessWidget {
   MyRecipes({super.key});
@@ -97,8 +99,8 @@ class MyRecipes extends StatelessWidget {
                     trailing: IconButton(
                       icon: Icon(Icons.edit, color: color.yellow),
                       onPressed: () {
-                        // Action de modification (par exemple, navigation vers la page d'édition)
-                       // controller.editRecipe(recipe);
+                        // Passer la recette à modifier
+                        Get.to(AddRecipePage(recipeToEdit: recipe));
                       },
                     ),
                     onTap: () async {
