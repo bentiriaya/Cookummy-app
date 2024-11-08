@@ -90,20 +90,20 @@ class RecipeCard extends StatelessWidget {
             ),
             alignment: Alignment.bottomLeft,
           ),
-          Positioned(
-            top: 10,
-            right: 10,
-            child: IconButton(
-              icon: Icon(
-                Icons.favorite_border,
-                color: color.yellow,
-              ),
-              onPressed: () {
-                // Logique pour ajouter ou retirer des favoris
-                print('$title added to favorites');
-              },
-            ),
-          ),
+          // Positioned(
+          //   top: 10,
+          //   right: 10,
+          //   child: IconButton(
+          //     icon: Icon(
+          //       Icons.favorite_border,
+          //       color: color.yellow,
+          //     ),
+          //     onPressed: () {
+          //       // Logique pour ajouter ou retirer des favoris
+          //       print('$title added to favorites');
+          //     },
+          //   ),
+          // ),
         ],
       ),
     );
