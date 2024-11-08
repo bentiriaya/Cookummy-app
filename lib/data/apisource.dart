@@ -20,7 +20,8 @@ List<Map<String, dynamic>> recipes = [
         " enfourner 30 minutes",
     "imageUrl": "assets/imagesData/p1.jpg",
     "type": Data.cake,
-    "cooktime":"30 min"
+    "cooktime":"30 min",
+    "isFavorite": false,
   },
   {
     "id": 2,
@@ -38,7 +39,8 @@ List<Map<String, dynamic>> recipes = [
         "verser la pate dans un moule a cake préalablement beurré et enfourner pour 30 min",
     "imageUrl": "assets/imagesData/p2.jpg",
     "type": Data.cake,
-    "cooktime":"30 min"
+    "cooktime":"30 min",
+  "isFavorite": false
   },
   {
     "id": 3,
@@ -56,7 +58,8 @@ List<Map<String, dynamic>> recipes = [
         "faire cuire les pancakes dans une poele bien chaude",
     "imageUrl": "assets/imagesData/p5.jpg",
     "type": Data.cake,
-    "cooktime":""
+    "cooktime":"",
+    "isFavorite": false,
   },
   {
     "id": 4,
@@ -78,7 +81,8 @@ List<Map<String, dynamic>> recipes = [
         "enfin ajouter les croutons sur le dessus de la salade et servez immédiatement",
     "imageUrl": "assets/imagesData/p4.jpg",
     "type": Data.salade,
-    "cooktime":""
+    "cooktime":"",
+    "isFavorite": false,
   },
   {
     "id": 5,
@@ -92,7 +96,8 @@ List<Map<String, dynamic>> recipes = [
     "instructions": "mixer tous les ingrédients dans un mixeur ",
     "imageUrl": "assets/imagesData/p3.jpg",
     "type": Data.boissons,
-    "cooktime":""
+    "cooktime":"",
+    "isFavorite": false,
   },
   {
     "id": 6,
@@ -114,7 +119,8 @@ List<Map<String, dynamic>> recipes = [
         "salez,poivrez , parsemez d'aneth.dégustez.",
     "imageUrl": "assets/imagesData/p6.jpg",
     "type": Data.soupe,
-    "cooktime":"40 min"
+    "cooktime":"40 min",
+    "isFavorite": false,
   },
   {
     "id": 7,
@@ -131,7 +137,8 @@ List<Map<String, dynamic>> recipes = [
         "la mettre dans le congélateur au moins 15 min ou jusqu'au moment de la servir ",
     "imageUrl": "assets/imagesData/p7.jpg",
     "type": Data.glace,
-    "cooktime":""
+    "cooktime":"",
+    "isFavorite": false,
   },
   {
     "id": 8,
@@ -150,6 +157,7 @@ List<Map<String, dynamic>> recipes = [
         "étalez la pate et disposez la sur du papier sulfurisé",
     "imageUrl": "assets/imagesData/p8.jpg",
     "type": Data.boulangerie,
-    "cooktime":"20 min"
+    "cooktime":"20 min",
+    "isFavorite": false,
   },
 ];

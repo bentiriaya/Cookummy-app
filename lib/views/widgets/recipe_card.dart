@@ -95,7 +95,7 @@ class RecipeCard extends StatelessWidget {
             right: 10,
             child: IconButton(
               icon: Icon(
-                Icons.favorite,
+                Icons.favorite_border,
                 color: color.yellow,
               ),
               onPressed: () {

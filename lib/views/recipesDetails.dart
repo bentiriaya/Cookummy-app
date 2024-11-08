@@ -1,15 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/data/colors.dart';
 import 'package:get/get.dart';
 import '../Controllers/RecipeDetailController.dart';
 import '../Services/sharedperfsManagers.dart';
 
-
 class RecipeDetailsPage extends StatelessWidget {
   final RecipeDetailController controller = Get.put(RecipeDetailController());
-
-
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -18,14 +14,40 @@ class RecipeDetailsPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Obx(() => controller.thumbnailUrl.value.isNotEmpty
-                ? Image.asset(
-              controller.thumbnailUrl.value,
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height / 3,
-              fit: BoxFit.cover,
-            )
-                : SizedBox.shrink()),
+            Stack(
+              children: [
+                Obx(() => controller.thumbnailUrl.value.isNotEmpty
+                    ? Image.asset(
+                  controller.thumbnailUrl.value,
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.height / 3,
+                  fit: BoxFit.cover,
+                )
+                    : SizedBox.shrink()),
+                Positioned(
+                  top: 16.0,
+                  right: 16.0,
+                  child: Row(
+                    children: [
+                      Obx(() => IconButton(
+                        icon: Icon(
+                          controller.isFavorite.value ? Icons.favorite : Icons.favorite_border,
+                          color: Colors.black, // couleur pour le coeur activé
+                        ),
+                        onPressed: controller.toggleFavorite,
+                      )),
+                      IconButton(
+                        icon: Icon(Icons.share, color: Colors.black),
+                        onPressed: () {
+                          // Logique pour partager la recette
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+
+              ],
+            ),
             SizedBox(height: 10),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -81,5 +103,4 @@ class RecipeDetailsPage extends StatelessWidget {
       ),
     );
   }
-
 }
