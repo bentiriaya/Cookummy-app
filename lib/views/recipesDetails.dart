@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/data/colors.dart';
 import 'package:get/get.dart';
 import '../Controllers/RecipeDetailController.dart';
 import '../Services/sharedperfsManagers.dart';
@@ -29,23 +28,21 @@ class RecipeDetailsPage extends StatelessWidget {
                   right: 16.0,
                   child: Row(
                     children: [
-                      Obx(() => IconButton(
-                        icon: Icon(
-                          controller.isFavorite.value ? Icons.favorite : Icons.favorite_border,
-                          color: Colors.black, // couleur pour le coeur activé
-                        ),
-                        onPressed: controller.toggleFavorite,
-                      )),
+                      IconButton(
+                        icon: Icon(Icons.favorite_border, color: Colors.black),
+                        onPressed: () {
+                          // Ajoutez ici la logique pour marquer la recette en favoris
+                        },
+                      ),
                       IconButton(
                         icon: Icon(Icons.share, color: Colors.black),
                         onPressed: () {
-                          // Logique pour partager la recette
+                          // Ajoutez ici la logique pour partager la recette
                         },
                       ),
                     ],
                   ),
                 ),
-
               ],
             ),
             SizedBox(height: 10),
