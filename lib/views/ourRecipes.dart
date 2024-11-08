@@ -61,6 +61,7 @@ class ourRecipes extends StatelessWidget {
                     await sp.saveStringList("ingredients", recipe["ingredients"]);
                     await sp.saveString("imageUrl", recipe["imageUrl"]);
                     await sp.saveString("cooktime", recipe["cooktime"]);
+
                     // Récupération et affichage de la valeur sauvegardée
                     String? savedTitle = await sp.getString("title");
                     String? savedInstruction = await sp.getString("instructions");

@@ -36,12 +36,18 @@ class RecipeDetailsPage extends StatelessWidget {
                   right: 16.0,
                   child: Row(
                     children: [
-                      IconButton(
-                        icon: Icon(Icons.favorite_border, color: Colors.black),
+                      Obx(() => IconButton(
+                        icon: Icon(
+                          controller.isFavorite.value
+                              ? Icons.favorite
+                              : Icons.favorite_border,
+                          color: controller.isFavorite.value ? Colors.red : Colors.black,
+                        ),
                         onPressed: () {
-                          // Ajoutez ici la logique pour marquer la recette en favoris
+                          // Inverser l'état du favori
+                          controller.toggleFavoriteStatus(controller.id.value);
                         },
-                      ),
+                      )),
                       IconButton(
                         icon: Icon(Icons.share, color: Colors.black),
                         onPressed: () async{

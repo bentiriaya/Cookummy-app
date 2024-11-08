@@ -7,6 +7,7 @@ class RecipeModel {
   String type;
   String cooktime;
 
+
   RecipeModel({
     required this.id,
     required this.title,
@@ -43,3 +44,4 @@ class RecipeModel {
     );
   }
 }
+

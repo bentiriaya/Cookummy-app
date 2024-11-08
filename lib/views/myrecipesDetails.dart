@@ -47,18 +47,18 @@ class MyRecipeDetailsPage extends StatelessWidget {
                               'For more, visit: [Add your URL here]';
 
                           // Vérifiez si le fichier image existe avant de partager
-                          // final imagePath = controller.thumbnailUrl.value;
-                          // final imageFile = File(imagePath);
-await Share.share(shareContent);
-                          // if (await imageFile.exists()) {
-                          //   // Partagez le fichier image et le texte
-                          //   final xFile = XFile(imagePath);
-                          //   await Share.shareXFiles([xFile], text: shareContent);
-                          // } else {
-                          //   // Message d'erreur si l'image n'existe pas
-                          //   Get.snackbar("Error", "Image not found for sharing.",
-                          //       snackPosition: SnackPosition.BOTTOM);
-                          // }
+                          final imagePath = controller.thumbnailUrl.value;
+                          final imageFile = File(imagePath);
+//await Share.share(shareContent);
+                          if (await imageFile.exists()) {
+                            // Partagez le fichier image et le texte
+                            final xFile = XFile(imagePath);
+                            await Share.shareXFiles([xFile], text: shareContent);
+                          } else {
+                            // Message d'erreur si l'image n'existe pas
+                            Get.snackbar("Error", "Image not found for sharing.",
+                                snackPosition: SnackPosition.BOTTOM);
+                          }
 
                         },
                       ),
