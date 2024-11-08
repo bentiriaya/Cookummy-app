@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/data/colors.dart';
 import 'package:flutter_application_1/routes/routesnames.dart';
@@ -80,8 +82,8 @@ class MyRecipes extends StatelessWidget {
                     contentPadding: EdgeInsets.all(10.0),
                     leading: recipe.imageUrl != null && recipe.imageUrl!.isNotEmpty
                         ? ClipOval(
-                      child: Image.asset(
-                        recipe.imageUrl!,
+                      child: Image.file(
+                       File(recipe.imageUrl!)  ,
                         width: 50,
                         height: 50,
                         fit: BoxFit.cover,

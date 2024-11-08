@@ -1,6 +1,13 @@
+
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:share_plus/share_plus.dart';
 import '../Controllers/RecipeDetailController.dart';
+import 'package:path/path.dart' as path;
 import '../Services/sharedperfsManagers.dart';
 
 class RecipeDetailsPage extends StatelessWidget {
@@ -36,8 +43,30 @@ class RecipeDetailsPage extends StatelessWidget {
                       ),
                       IconButton(
                         icon: Icon(Icons.share, color: Colors.black),
-                        onPressed: () {
-                          // Ajoutez ici la logique pour partager la recette
+                        onPressed: () async{
+                          // Create the content you want to share
+                          String shareContent = 'Check out this recipe: ${controller.title.value}\n'
+                              'Cook Time: ${controller.cookTime.value}\n'
+                              'Ingredients: ${controller.ingredients.join(", ")}\n'
+                              'Instructions: ${controller.instructions.value}\n'
+                              'For more, visit: [Add your URL here]';
+
+                          // Load image from assets
+                          final byteData = await rootBundle.load(controller.thumbnailUrl.value);
+
+                          // Get temporary directory
+                          final tempDir = await getTemporaryDirectory();
+                          final tempFilePath = path.join(tempDir.path, 'shared_image.png');
+                          final tempFile = File(tempFilePath);
+
+                          // Write the image bytes to the temporary file
+                          await tempFile.writeAsBytes(byteData.buffer.asUint8List());
+
+                          // Convert to XFile and share
+                          final xFile = XFile(tempFile.path);
+                          await Share.shareXFiles([xFile], text: shareContent);
+
+
                         },
                       ),
                     ],
