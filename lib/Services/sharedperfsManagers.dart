@@ -101,4 +101,27 @@ class SharedperfManager extends GetxService{
     // Create and return the Icon object
     return Icon(IconData(codePoint, fontFamily: fontFamily), color: color);
   }
+  // Method to save a list of integers
+  Future<void> saveIntList(String key, List<int> values) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setStringList(key, values.map((e) => e.toString()).toList());
+  }
+  //suuprimer
+  Future<void> removeFavoriteRecipe(int recipeId) async {
+    List<int> favorites = await getIntList('favorite_recipes') ?? [];
+    favorites.remove(recipeId); // Supprimer l'ID du favori
+    await saveIntList('favorite_recipes', favorites); // Sauvegarder la liste mise à jour
+  }
+  // Method to retrieve a list of integers
+  Future<List<int>?> getIntList(String key) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    List<String>? stringList = prefs.getStringList(key);
+
+    if (stringList == null) {
+      return null;
+    }
+
+    // Convert the list of strings back into a list of integers
+    return stringList.map((e) => int.parse(e)).toList();
+  }
 }

@@ -10,8 +10,7 @@ class RecipeDetailController extends GetxController {
   var thumbnailUrl = ''.obs;
   var instructions = ''.obs;
   var ingredients = <String>[].obs;
-  var isFavorite =false.obs;
-
+  var isFavorite = false.obs;
 
   // Liste des recettes (cela doit être initialisé ou récupéré d'une source)
   List<Map<String, dynamic>> recs = recipes;
@@ -24,15 +23,22 @@ class RecipeDetailController extends GetxController {
     for (var recipe in recs) {
       if (recipe['id'] == recipeId) {
         // Inverse la valeur de 'isFavorite'
-        bool currentStatus = recipe['isFavorite'] ?? false;  // Récupère l'état actuel, ou false si non défini
-        recipe['isFavorite'] = !currentStatus;  // Change la valeur (si true, devient false, et vice versa)
+        bool currentStatus = recipe['isFavorite'] ?? false;
+        recipe['isFavorite'] = !currentStatus;
 
-        // Sauvegarde dans SharedPreferences
+        // Sauvegarder la valeur dans SharedPreferences
         SharedperfManager sharedPerfManager = Get.put(SharedperfManager());
+        await sharedPerfManager.saveBool('isFavorite_$recipeId', recipe['isFavorite']);
 
-        // Enregistre la valeur inversée de 'isFavorite'
-        await sharedPerfManager.saveBool('isFavorite_${recipeId}', recipe['isFavorite']);
-
+        // Ajouter ou retirer cette recette à la liste des favoris
+        List<int> favorites = await sharedPerfManager.getIntList('favorite_recipes') ?? [];
+        if (recipe['isFavorite']) {
+          favorites.add(recipeId); // Ajouter à la liste des favoris
+        } else {
+          favorites.remove(recipeId); // Retirer de la liste des favoris
+        }
+        // Sauvegarder la liste mise à jour des favoris
+        await sharedPerfManager.saveIntList('favorite_recipes', favorites);
         break;
       }
     }
@@ -45,7 +51,6 @@ class RecipeDetailController extends GetxController {
 
     // Charge les recettes et leurs statuts de favoris depuis SharedPreferences
 
-
     // Attendre que toutes les données soient chargées avant d'assigner les valeurs
     id.value = await sp.getInt("id") ?? 0;
     title.value = await sp.getString("title") ?? "No Title";
@@ -53,6 +58,6 @@ class RecipeDetailController extends GetxController {
     thumbnailUrl.value = await sp.getString("imageUrl") ?? "";
     instructions.value = await sp.getString("instructions") ?? "No instructions";
     ingredients.value = await sp.getStringList("ingredients") ?? ["No ingredients"];
-    isFavorite.value=await sp.getBool('isFavorite_$id')?? false ;
+    isFavorite.value = await sp.getBool('isFavorite_$id') ?? false;
   }
 }
