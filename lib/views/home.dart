@@ -12,15 +12,7 @@ class Home extends StatelessWidget {
     final NavigationController navigationController = Get.put(NavigationController()); // Récupérer le controller
 
     return Scaffold(
-      appBar: AppBar(
-        actions: [
-          IconButton(
-            icon: Icon(Icons.search,color: color.yellow,),
-           onPressed: (){},
-          ),
-        ],
-        title: Obx(() => Text(navigationController.appBarTitle)), // Listen to title changes
-      ),
+
       body: Obx(() => navigationController.currentChild), // Listen to child changes
       bottomNavigationBar: BottomNav(), // Your BottomNav widget
     );
