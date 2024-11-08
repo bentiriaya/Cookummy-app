@@ -126,7 +126,7 @@ class MyRecipes extends StatelessWidget {
                       await sp.saveString("cooktime", recipe.cooktime);
                       // Passez les détails de la recette vers la page RecipeDetailsPage
                       Get.toNamed(
-                        namesRoute.detailRec,
+                        namesRoute.myrecDet,
 
 
                       );

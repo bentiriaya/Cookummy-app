@@ -10,7 +10,7 @@ import '../Controllers/RecipeDetailController.dart';
 import 'package:path/path.dart' as path;
 import '../Services/sharedperfsManagers.dart';
 
-class RecipeDetailsPage extends StatelessWidget {
+class MyRecipeDetailsPage extends StatelessWidget {
   final RecipeDetailController controller = Get.put(RecipeDetailController());
 
   @override
@@ -24,8 +24,8 @@ class RecipeDetailsPage extends StatelessWidget {
               children: [
                 Obx(() => controller.thumbnailUrl.value.isNotEmpty
 
-                    ? Image.asset(
-                  controller.thumbnailUrl.value,
+                    ? Image.file(
+                File(controller.thumbnailUrl.value)  ,
                   width: MediaQuery.of(context).size.width,
                   height: MediaQuery.of(context).size.height / 3,
                   fit: BoxFit.cover,
@@ -37,36 +37,28 @@ class RecipeDetailsPage extends StatelessWidget {
                   child: Row(
                     children: [
                       IconButton(
-                        icon: Icon(Icons.favorite_border, color: Colors.black),
-                        onPressed: () {
-                          // Ajoutez ici la logique pour marquer la recette en favoris
-                        },
-                      ),
-                      IconButton(
                         icon: Icon(Icons.share, color: Colors.black),
                         onPressed: () async{
-                          // Create the content you want to share
+                          // Contenu à partager
                           String shareContent = 'Check out this recipe: ${controller.title.value}\n'
                               'Cook Time: ${controller.cookTime.value}\n'
                               'Ingredients: ${controller.ingredients.join(", ")}\n'
                               'Instructions: ${controller.instructions.value}\n'
                               'For more, visit: [Add your URL here]';
 
-                          // Load image from assets
-                          final byteData = await rootBundle.load(controller.thumbnailUrl.value);
-
-                          // Get temporary directory
-                          final tempDir = await getTemporaryDirectory();
-                          final tempFilePath = path.join(tempDir.path, 'shared_image.png');
-                          final tempFile = File(tempFilePath);
-
-                          // Write the image bytes to the temporary file
-                          await tempFile.writeAsBytes(byteData.buffer.asUint8List());
-
-                          // Convert to XFile and share
-                          final xFile = XFile(tempFile.path);
-                          await Share.shareXFiles([xFile], text: shareContent);
-
+                          // Vérifiez si le fichier image existe avant de partager
+                          // final imagePath = controller.thumbnailUrl.value;
+                          // final imageFile = File(imagePath);
+await Share.share(shareContent);
+                          // if (await imageFile.exists()) {
+                          //   // Partagez le fichier image et le texte
+                          //   final xFile = XFile(imagePath);
+                          //   await Share.shareXFiles([xFile], text: shareContent);
+                          // } else {
+                          //   // Message d'erreur si l'image n'existe pas
+                          //   Get.snackbar("Error", "Image not found for sharing.",
+                          //       snackPosition: SnackPosition.BOTTOM);
+                          // }
 
                         },
                       ),
