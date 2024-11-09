@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/Controllers/SplashScreenController.dart';
-import 'package:flutter_application_1/data/colors.dart';
+import 'package:Cookummy/Controllers/SplashScreenController.dart';
+import 'package:Cookummy/data/colors.dart';
 import 'package:get/get.dart';
 
 class SplashScreen extends StatelessWidget {
@@ -10,7 +10,7 @@ class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: color.bgColor,
+      backgroundColor: Colors.white,
       body: GetBuilder<SplashScreenController>(
         init: SplashScreenController(),
         builder: (controller){

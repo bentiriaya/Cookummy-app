@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/routes/routesnames.dart';
+import 'package:Cookummy/routes/routesnames.dart';
 import 'package:get/get.dart';
 
 class SplashScreenController extends GetxController {

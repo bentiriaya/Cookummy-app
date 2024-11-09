@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/routes/route.dart';
-import 'package:flutter_application_1/views/addRecipes.dart';
-import 'package:flutter_application_1/views/home.dart';
-import 'package:flutter_application_1/views/splashScreen.dart';
+import 'package:Cookummy/routes/route.dart';
+import 'package:Cookummy/views/addRecipes.dart';
+import 'package:Cookummy/views/home.dart';
+import 'package:Cookummy/views/splashScreen.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';

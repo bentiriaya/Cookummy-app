@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/data/apisource.dart';
+import 'package:Cookummy/data/apisource.dart';
 import 'package:get/get.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import '../Services/sharedperfsManagers.dart';
@@ -11,6 +11,11 @@ class Favorites extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Afficher le dialog à l'ouverture de la page
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _showInfoDialog(context);
+    });
+
     return Scaffold(
       appBar: AppBar(title: Text(Data.favoris), automaticallyImplyLeading: false),
       body: FutureBuilder<List<int>>(
@@ -136,5 +141,26 @@ class Favorites extends StatelessWidget {
     SharedperfManager sharedPerfManager = Get.find<SharedperfManager>();
     await sharedPerfManager.removeFavoriteRecipe(recipeId);
     Get.forceAppUpdate();
+  }
+
+  // Fonction pour afficher le Dialog
+  void _showInfoDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Info'),
+          content: Text('Pour supprimer une recette des favoris, faites glisser la carte de la recette vers le haut.'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text("D'accord"),
+            ),
+          ],
+        );
+      },
+    );
   }
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/data/colors.dart';
-import 'package:flutter_application_1/views/widgets/bottomNavigation.dart';
+import 'package:Cookummy/data/colors.dart';
+import 'package:Cookummy/views/widgets/bottomNavigation.dart';
 import 'package:get/get.dart';
 import '../../Controllers/navigationController.dart'; // Importer le controller
 

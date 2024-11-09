@@ -1,6 +1,6 @@
 import 'package:fluid_bottom_nav_bar/fluid_bottom_nav_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/data/colors.dart';
+import 'package:Cookummy/data/colors.dart';
 
 import 'package:get/get.dart';
 import '../../Controllers/navigationController.dart';

@@ -1,4 +1,4 @@
-import 'package:flutter_application_1/routes/routesnames.dart';
+import 'package:Cookummy/routes/routesnames.dart';
 import 'package:get/get.dart';
 import '../Services/sharedperfsManagers.dart';
 import '../data/apisource.dart';

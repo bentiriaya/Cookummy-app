@@ -1,11 +1,11 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/data/colors.dart';
-import 'package:flutter_application_1/routes/routesnames.dart';
-import 'package:flutter_application_1/views/addRecipes.dart';
+import 'package:Cookummy/data/colors.dart';
+import 'package:Cookummy/routes/routesnames.dart';
+import 'package:Cookummy/views/addRecipes.dart';
 import 'package:get/get.dart';
-import 'package:flutter_application_1/Controllers/myRecipesController.dart';
+import 'package:Cookummy/Controllers/myRecipesController.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../Services/sharedperfsManagers.dart';
 import '../data/strings.dart';
@@ -29,16 +29,16 @@ class MyRecipes extends StatelessWidget {
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text("Confirm Deletion"),
-          content: Text("Are you sure you want to delete this recipe?"),
+          content: Text("Êtes-vous sûr de vouloir supprimer cette recette ?"),
           actions: [
             TextButton(
-              child: Text("Cancel"),
+              child: Text("Annuler"),
               onPressed: () {
                 Navigator.of(context).pop();
               },
             ),
             TextButton(
-              child: Text("Delete", style: TextStyle(color: Colors.red)),
+              child: Text("Supprimer", style: TextStyle(color: Colors.red)),
               onPressed: () async {
                 await controller.deleteRecipe(recipeId); // Supprimer la recette
                 Navigator.of(context).pop();

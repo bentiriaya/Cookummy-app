@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/routes/routesnames.dart';
+import 'package:Cookummy/routes/routesnames.dart';
 
-import 'package:flutter_application_1/views/widgets/recipe_card.dart';
-import 'package:flutter_application_1/views/widgets/type_card.dart';
+import 'package:Cookummy/views/widgets/recipe_card.dart';
+import 'package:Cookummy/views/widgets/type_card.dart';
 
 
 import 'package:get/get.dart';

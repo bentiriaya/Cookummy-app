@@ -1,5 +1,5 @@
-import 'package:flutter_application_1/routes/routesnames.dart';
-import 'package:flutter_application_1/views/myrecipesDetails.dart';
+import 'package:Cookummy/routes/routesnames.dart';
+import 'package:Cookummy/views/myrecipesDetails.dart';
 import 'package:get/get_navigation/src/routes/get_route.dart';
 
 import '../views/addRecipes.dart';

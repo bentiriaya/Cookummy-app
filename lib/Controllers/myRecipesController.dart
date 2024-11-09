@@ -1,6 +1,6 @@
-import 'package:flutter_application_1/routes/routesnames.dart';
+import 'package:Cookummy/routes/routesnames.dart';
 import 'package:get/get.dart';
-import 'package:flutter_application_1/db/db_provider.dart';
+import 'package:Cookummy/db/db_provider.dart';
 
 
 import '../Services/sharedperfsManagers.dart';

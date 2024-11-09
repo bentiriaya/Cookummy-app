@@ -1,8 +1,8 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/Controllers/myRecipesController.dart';
-import 'package:flutter_application_1/data/colors.dart';
-import 'package:flutter_application_1/data/strings.dart';
+import 'package:Cookummy/Controllers/myRecipesController.dart';
+import 'package:Cookummy/data/colors.dart';
+import 'package:Cookummy/data/strings.dart';
 import 'package:image_picker/image_picker.dart';
 import '../db/db_provider.dart';
 import '../model/recipe.dart';

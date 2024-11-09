@@ -1,4 +1,4 @@
-import 'package:flutter_application_1/model/recipe.dart';
+import 'package:Cookummy/model/recipe.dart';
 import 'package:get/get.dart';
 import '../data/strings.dart';
 

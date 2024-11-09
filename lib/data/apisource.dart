@@ -1,4 +1,4 @@
-import 'package:flutter_application_1/data/strings.dart';
+import 'package:Cookummy/data/strings.dart';
 
 List<Map<String, dynamic>> recipes = [
   {
