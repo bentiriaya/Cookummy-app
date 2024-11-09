@@ -23,7 +23,6 @@ class RecipeDetailsPage extends StatelessWidget {
             Stack(
               children: [
                 Obx(() => controller.thumbnailUrl.value.isNotEmpty
-
                     ? Image.asset(
                   controller.thumbnailUrl.value,
                   width: MediaQuery.of(context).size.width,
@@ -43,8 +42,17 @@ class RecipeDetailsPage extends StatelessWidget {
                               : Icons.favorite_border,
                           color: controller.isFavorite.value ? Colors.red : Colors.black,
                         ),
-                        onPressed: () {
+                        onPressed: () async {
                           // Inverser l'état du favori
+                          bool isFav = controller.isFavorite.value;
+                          SharedperfManager sharedPerfManager = Get.find<SharedperfManager>();
+
+                          // Mise à jour de l'état du favori dans SharedPreferences
+                          if (isFav) {
+                            await sharedPerfManager.removeFavoriteRecipe(controller.id.value);
+                          } else {
+                            await sharedPerfManager.addFavoriteRecipe(controller.id.value);
+                          }
                           controller.toggleFavoriteStatus(controller.id.value);
                         },
                       )),

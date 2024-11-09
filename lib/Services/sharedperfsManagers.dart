@@ -112,6 +112,15 @@ class SharedperfManager extends GetxService{
     favorites.remove(recipeId); // Supprimer l'ID du favori
     await saveIntList('favorite_recipes', favorites); // Sauvegarder la liste mise à jour
   }
+  Future<void> addFavoriteRecipe(int recipeId) async {
+    List<int> favoriteRecipes = await getIntList('favorite_recipes') ?? [];
+    if (!favoriteRecipes.contains(recipeId)) {
+      favoriteRecipes.add(recipeId);
+      await saveIntList('favorite_recipes', favoriteRecipes);
+    }
+
+  }
+
   // Method to retrieve a list of integers
   Future<List<int>?> getIntList(String key) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -124,4 +133,5 @@ class SharedperfManager extends GetxService{
     // Convert the list of strings back into a list of integers
     return stringList.map((e) => int.parse(e)).toList();
   }
+
 }

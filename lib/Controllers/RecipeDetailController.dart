@@ -14,7 +14,12 @@ class RecipeDetailController extends GetxController {
 
   // Liste des recettes (cela doit être initialisé ou récupéré d'une source)
   List<Map<String, dynamic>> recs = recipes;
-
+  // Cette méthode est appelée pour mettre à jour l'état du favori
+  void updateFavoriteStatus(int recipeId, bool status) {
+    if (id.value == recipeId) {
+      isFavorite.value = status;
+    }
+  }
   // Fonction pour inverser l'état de favori
   void toggleFavoriteStatus(int recipeId) async {
     isFavorite.value = !isFavorite.value;
@@ -60,4 +65,7 @@ class RecipeDetailController extends GetxController {
     ingredients.value = await sp.getStringList("ingredients") ?? ["No ingredients"];
     isFavorite.value = await sp.getBool('isFavorite_$id') ?? false;
   }
+
+
+
 }
