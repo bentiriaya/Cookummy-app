@@ -24,5 +24,5 @@ Cookummy is your go-to recipe companion! Whether you're looking for culinary ins
 * Recipe Search and Categories: Easily find recipes through search filters and categories like ingredients, cooking time, or meal type.
 * 
 * Seamless Recipe Sharing: Quickly share recipes with your friends and family via social media or messaging apps directly from the app.
-# 🚀 Screenshots:
-[img alt][D:\FLUTTER1\flutter_application_1\assets\screenshots\s1.jpg]
+#  Screenshots:
+![img alt](D:\FLUTTER1\flutter_application_1\assets\screenshots\s1.jpg)
