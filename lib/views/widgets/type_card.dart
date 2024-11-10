@@ -20,7 +20,7 @@ class TypeCard extends StatelessWidget {
       child: ClipRRect(
         borderRadius: BorderRadius.circular(5.0),
         child: Card(
-          color: controller.isTypeSelected(title) ? color.yellow : Colors.grey,
+          color: controller.isTypeSelected(title) ? color.yellow : color.bgColor,
           margin: EdgeInsets.all(5.0),
           child: Container(
             width: 50,
