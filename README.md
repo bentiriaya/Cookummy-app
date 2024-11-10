@@ -25,4 +25,4 @@ Cookummy is your go-to recipe companion! Whether you're looking for culinary ins
 * 
 * Seamless Recipe Sharing: Quickly share recipes with your friends and family via social media or messaging apps directly from the app.
 #  Screenshots:
-![img alt](D:\FLUTTER1\flutter_application_1\assets\screenshots\s1.jpg)
+<img src="assets/screenshots/s1.jpg" alt="splash Screen" width="150"/>
