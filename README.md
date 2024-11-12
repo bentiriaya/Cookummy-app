@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 # Cookummy
 
 Cookummy is your go-to recipe companion! Whether you're looking for culinary inspiration or want to save and organize your own creations, Cookummy makes it easy and fun. Discover a world of delicious recipes, save your favorites, and even share them with friends on WhatsApp, Facebook, or any app. With a user-friendly design and seamless functionality, Cookummy is the perfect kitchen assistant for every home cook.
